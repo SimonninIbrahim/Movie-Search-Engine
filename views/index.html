@@ -1,147 +1,60 @@
 {% extends "base.html" %}
-{% block mainContent%}
-<!-- This block defines the main content area, extending from the base template -->
+{% block mainContent %}
+<!-- Main content area extending from base template -->
 
-<!-- Mobile view welcome section -->
-<div id="mobile-welcomeToThe">
-    <!-- Welcome message for mobile view -->
-    <div id="mobile-welcomeToTheText">
-        <p>
-            <b>
-                Welcome to The
-            </b>
-        </p>
+<!-- Hero Section with Welcome Message -->
+<div id="hero-section" class="text-center text-white">
+    <div class="container">
+        <h1 class="display-4">Welcome to The</h1>
+        <h1 class="LogoText display-1">Tech Blog 2023</h1>
+        <p class="lead">The best place to share your knowledge and make the world better</p>
+        <a href="./new_movie.html" class="btn btn-success mt-4">Create a Movie</a>
     </div>
-
-    <!-- Logo for mobile view -->
-    <div class="Logo" id="mobile-Logo">
-        <h1 class="LogoText" id="mobile-LogoText">
-            Tech Blog 2023
-        </h1>
-    </div>
-
-    <!-- Additional text or spacing -->
-    <div>
-        <p>
-            <b>
-                &#09; ...
-            </b>
-        </p>
-    </div>
-</div>
-
-<!-- Upper part section containing welcome message and branding -->
-<div class="UpperPart">
-    <section class="WelcomeMessage">
-        <div id="welcomeToThe">
-            <!-- Desktop view welcome message -->
-            <div>
-                <p id="welcomeToTheText">
-                    <b>
-                        Welcome to The
-                    </b>
-                </p>
-            </div>
-
-            <!-- Logo for desktop view -->
-            <div class="Logo">
-                <h1 class="LogoText">
-                    Tech Blog 2023
-                </h1>
-            </div>
-
-            <!-- Additional text or spacing for desktop view -->
-            <div>
-                <p>
-                    <b>
-                        &#09; ...
-                    </b>
-                </p>
-            </div>
-        </div>
-
-        <!-- Brand description and call to action -->
-        <div id="brandDescription">
-            <p>
-                <b>
-                    The best place to share your knowledge and make the world better
-                </b>
-            </p>
-
-            <!-- Link to create a new movie entry -->
-            <p>
-                <a href="./new_movie.html">
-                    <Button class="Button CreateMovie">
-                        Create a Movie
-                    </Button>
-                </a>
-            </p>
-        </div>
-    </section>
 </div>
 
 <!-- Genre Selection Buttons -->
-<div class="genreButtons">
-    <!-- Buttons to filter movies by genre -->
-    <a href="/short"><button class="Button GenreButton">Short</button></a>
-    <a href="/animation"><button class="Button GenreButton">Animation</button></a>
-    <a href="/documentary"><button class="Button GenreButton">Documentary</button></a>
-    <a href="/animation-comedy"><button class="Button GenreButton">Animation & Comedy</button></a>
+<div class="genreButtons container text-center mt-5">
+    <a href="/short" class="btn btn-outline-light mx-2">Short</a>
+    <a href="/animation" class="btn btn-outline-light mx-2">Animation</a>
+    <a href="/documentary" class="btn btn-outline-light mx-2">Documentary</a>
+    <a href="/animation-comedy" class="btn btn-outline-light mx-2">Animation & Comedy</a>
 </div>
 
 <!-- Movie List Header -->
-<header>
-    <h1>All Technical Movies</h1>
+<header class="container mt-5">
+    <h1 class="text-white">All Technical Movies</h1>
 </header>
 
 <!-- Loop through each movie in the movieSearchResult array -->
-{% for movie in movieSearchResult %}
-<section>
-    <div class="movieBox">
-        <!-- Left side bar with movie details and actions -->
-        <div class="LeftSideBar">
-            <!-- Movie poster image -->
-            <div class="editorIcon">
-                <img src="{{ movie.poster }}" height="160em" />
-            </div>
-            <!-- Movie director's name -->
-            <div class="Author">
-                <p>{{ movie.director }}</p>
-            </div>
-            <!-- Divider line -->
-            <div>
-                <hr color="#6d64ff" width="50em">
-            </div>
-            <!-- Like icon and count -->
-            <div class="likesIcon">
-                <img src="/heart-suit.png" height="40em" />
-            </div>
-            <div class="likesNumber">
-                <p>{{ movie.imdbRating }}</p>
-            </div>
-        </div>
-
-        <!-- Right side content with movie description and actions -->
-        <div class="movieBoxContent">
-            <!-- Movie title and description -->
-            <div class="movieBoxTextBox">
-                <h3>{{ movie.title }}</h3>
-                <p class="movieText">
-                    {{ movie.fullplot }}
-                </p>
-            </div>
-            <!-- Action buttons: Read, Edit, Delete -->
-            <div class="ButtonsRow">
-                <a href='movie.html/{{ movie.id }}'><button class="Button ReadButton">Read Now</button></a>
-                <a href='edit/{{ movie.id }}'><button class="Button EditButton">Edit</button></a>
-                <form action='delete/{{ movie.id }}' method="POST" style="display:inline;">
-                    <button class="Button DeleteButton" type="submit">Delete</button>
-                </form>
+<div class="container mt-4">
+    <div class="row">
+        {% for movie in movieSearchResult %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card bg-dark text-white movie-card">
+                <img src="{{ movie.poster }}" class="card-img-top" alt="{{ movie.title }} poster">
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <p class="card-text">{{ movie.fullplot }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">{{ movie.director }}</small>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-heart-fill text-danger me-2"></i>
+                            <small class="text-muted">{{ movie.imdbRating }}</small>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <a href='movie.html/{{ movie.id }}' class="btn btn-outline-light btn-sm">Read Now</a>
+                        <a href='edit/{{ movie.id }}' class="btn btn-outline-light btn-sm">Edit</a>
+                        <form action='delete/{{ movie.id }}' method="POST" style="display:inline;">
+                            <button class="btn btn-outline-light btn-sm" type="submit">Delete</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
+        {% endfor %}
     </div>
-</section>
-{% endfor %}
+</div>
 <!-- End loop through movieSearchResult -->
 
 {% endblock %}
