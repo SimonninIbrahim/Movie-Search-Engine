@@ -5,7 +5,6 @@ const sqlite = require('sqlite'); // Import sqlite to provide async/await API ov
 // Open a connection to the SQLite database
 async function openConnectionToDB() {
   // Open a connection to the database file 'testing database.db3'
-  // sqlite.open returns a Promise that resolves with the database instance
   const db = await sqlite.open({
     filename: './testing database.db3', // Path to the SQLite database file
     driver: sqlite3.Database // Specify the database driver

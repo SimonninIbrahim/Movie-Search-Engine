@@ -12,7 +12,7 @@
     </div>
 </div>
 
-<!-- Advanced Search Buttons -->
+<!-- Advanced Search Filters -->
 <div class="container mt-5">
     <div class="bg-dark text-white p-4 rounded">
         <div class="row mb-3">
@@ -20,12 +20,18 @@
             <div class="col-md-12 text-center">
                 <h4>Select Genres</h4>
                 <div class="btn-group" role="group">
-                    <a href="/search?genres=Short" class="btn btn-outline-light">Short</a>
-                    <a href="/search?genres=Animation" class="btn btn-outline-light">Animation</a>
-                    <a href="/search?genres=Documentary" class="btn btn-outline-light">Documentary</a>
-                    <a href="/search?genres=Comedy" class="btn btn-outline-light">Comedy</a>
-                    <a href="/search?genres=Drama" class="btn btn-outline-light">Drama</a>
-                    <a href="/search?genres=Action" class="btn btn-outline-light">Action</a>
+                    <button class="btn btn-outline-light filter-btn" data-filter="genres"
+                        data-value="Short">Short</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="genres"
+                        data-value="Animation">Animation</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="genres"
+                        data-value="Documentary">Documentary</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="genres"
+                        data-value="Comedy">Comedy</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="genres"
+                        data-value="Drama">Drama</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="genres"
+                        data-value="Action">Action</button>
                     <!-- Add more buttons as needed -->
                 </div>
             </div>
@@ -35,22 +41,13 @@
             <div class="col-md-12 text-center">
                 <h4>Select Decade</h4>
                 <div class="btn-group" role="group">
-                    <a href="/search?minYear=1880&maxYear=1889" class="btn btn-outline-light">1880s</a>
-                    <a href="/search?minYear=1890&maxYear=1899" class="btn btn-outline-light">1890s</a>
-                    <a href="/search?minYear=1900&maxYear=1909" class="btn btn-outline-light">1900s</a>
-                    <a href="/search?minYear=1910&maxYear=1919" class="btn btn-outline-light">1910s</a>
-                    <a href="/search?minYear=1920&maxYear=1929" class="btn btn-outline-light">1920s</a>
-                    <a href="/search?minYear=1930&maxYear=1939" class="btn btn-outline-light">1930s</a>
-                    <a href="/search?minYear=1940&maxYear=1949" class="btn btn-outline-light">1940s</a>
-                    <a href="/search?minYear=1950&maxYear=1959" class="btn btn-outline-light">1950s</a>
-                    <a href="/search?minYear=1960&maxYear=1969" class="btn btn-outline-light">1960s</a>
-                    <a href="/search?minYear=1970&maxYear=1979" class="btn btn-outline-light">1970s</a>
-                    <a href="/search?minYear=1980&maxYear=1989" class="btn btn-outline-light">1980s</a>
-                    <a href="/search?minYear=1990&maxYear=1999" class="btn btn-outline-light">1990s</a>
-                    <a href="/search?minYear=2000&maxYear=2009" class="btn btn-outline-light">2000s</a>
-                    <a href="/search?minYear=2010&maxYear=2019" class="btn btn-outline-light">2010s</a>
-                    <a href="/search?minYear=2020&maxYear=2029" class="btn btn-outline-light">2020s</a>
-                    <a href="/search?minYear=2030&maxYear=2039" class="btn btn-outline-light">2030s</a>
+                    <button class="btn btn-outline-light filter-btn" data-filter="minYear" data-value="1880"
+                        data-maxYear="1889">1880s</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="minYear" data-value="1890"
+                        data-maxYear="1899">1890s</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="minYear" data-value="1900"
+                        data-maxYear="1909">1900s</button>
+                    <!-- Add more buttons for each decade up to 2030s -->
                 </div>
             </div>
         </div>
@@ -59,9 +56,12 @@
             <div class="col-md-12 text-center">
                 <h4>Select IMDb Rating</h4>
                 <div class="btn-group" role="group">
-                    <a href="/search?minRating=7&maxRating=10" class="btn btn-outline-light">7-10</a>
-                    <a href="/search?minRating=5&maxRating=7" class="btn btn-outline-light">5-7</a>
-                    <a href="/search?minRating=0&maxRating=5" class="btn btn-outline-light">0-5</a>
+                    <button class="btn btn-outline-light filter-btn" data-filter="minRating" data-value="7"
+                        data-maxRating="10">7-10</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="minRating" data-value="5"
+                        data-maxRating="7">5-7</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="minRating" data-value="0"
+                        data-maxRating="5">0-5</button>
                 </div>
             </div>
         </div>
@@ -70,11 +70,21 @@
             <div class="col-md-12 text-center">
                 <h4>Select Other Attributes</h4>
                 <div class="btn-group" role="group">
-                    <a href="/search?director=Director+Name" class="btn btn-outline-light">Director Name</a>
-                    <a href="/search?cast=Cast+Member" class="btn btn-outline-light">Cast Member</a>
-                    <a href="/search?country=Country" class="btn btn-outline-light">Country</a>
-                    <a href="/search?language=Language" class="btn btn-outline-light">Language</a>
+                    <button class="btn btn-outline-light filter-btn" data-filter="director"
+                        data-value="Director+Name">Director Name</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="cast" data-value="Cast+Member">Cast
+                        Member</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="country"
+                        data-value="Country">Country</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="language"
+                        data-value="Language">Language</button>
                 </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <!-- Search Button -->
+            <div class="col-md-12 text-center">
+                <button id="search-button" class="btn btn-outline-light">Search</button>
             </div>
         </div>
     </div>
@@ -124,5 +134,57 @@
     </div>
 </div>
 <!-- End loop through movieSearchResult -->
+
+<script>
+    // JavaScript to handle filter selection and search
+    document.addEventListener("DOMContentLoaded", function () {
+        const filters = {};
+        const filterButtons = document.querySelectorAll(".filter-btn");
+        filterButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const filter = this.getAttribute("data-filter");
+                const value = this.getAttribute("data-value");
+                const maxValue = this.getAttribute("data-maxYear") || this.getAttribute("data-maxRating");
+
+                // Toggle active state
+                this.classList.toggle("active");
+
+                if (this.classList.contains("active")) {
+                    // Add to filters
+                    if (filter === "minYear" || filter === "minRating") {
+                        filters[filter] = value;
+                        if (maxValue) {
+                            filters[maxValue.includes("Year") ? "maxYear" : "maxRating"] = maxValue;
+                        }
+                    } else {
+                        if (!filters[filter]) {
+                            filters[filter] = [];
+                        }
+                        filters[filter].push(value);
+                    }
+                } else {
+                    // Remove from filters
+                    if (filter === "minYear" || filter === "minRating") {
+                        delete filters[filter];
+                        if (maxValue) {
+                            delete filters[maxValue.includes("Year") ? "maxYear" : "maxRating"];
+                        }
+                    } else {
+                        filters[filter] = filters[filter].filter(v => v !== value);
+                        if (filters[filter].length === 0) {
+                            delete filters[filter];
+                        }
+                    }
+                }
+            });
+        });
+
+        // Handle search button click
+        document.getElementById("search-button").addEventListener("click", function () {
+            const query = new URLSearchParams(filters).toString();
+            window.location.href = `/search?${query}`;
+        });
+    });
+</script>
 
 {% endblock %}
