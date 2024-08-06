@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {% block mainContent%}
+<!-- This block defines the main content area, extending from the base template -->
 
+<!-- Mobile view welcome section -->
 <div id="mobile-welcomeToThe">
+    <!-- Welcome message for mobile view -->
     <div id="mobile-welcomeToTheText">
         <p>
             <b>
@@ -10,12 +13,14 @@
         </p>
     </div>
 
+    <!-- Logo for mobile view -->
     <div class="Logo" id="mobile-Logo">
         <h1 class="LogoText" id="mobile-LogoText">
             Tech Blog 2023
         </h1>
     </div>
 
+    <!-- Additional text or spacing -->
     <div>
         <p>
             <b>
@@ -25,9 +30,11 @@
     </div>
 </div>
 
+<!-- Upper part section containing welcome message and branding -->
 <div class="UpperPart">
     <section class="WelcomeMessage">
         <div id="welcomeToThe">
+            <!-- Desktop view welcome message -->
             <div>
                 <p id="welcomeToTheText">
                     <b>
@@ -36,12 +43,14 @@
                 </p>
             </div>
 
+            <!-- Logo for desktop view -->
             <div class="Logo">
                 <h1 class="LogoText">
                     Tech Blog 2023
                 </h1>
             </div>
 
+            <!-- Additional text or spacing for desktop view -->
             <div>
                 <p>
                     <b>
@@ -51,6 +60,7 @@
             </div>
         </div>
 
+        <!-- Brand description and call to action -->
         <div id="brandDescription">
             <p>
                 <b>
@@ -58,6 +68,7 @@
                 </b>
             </p>
 
+            <!-- Link to create a new movie entry -->
             <p>
                 <a href="./new_movie.html">
                     <Button class="Button CreateMovie">
@@ -69,32 +80,39 @@
     </section>
 </div>
 
-<!--- Genre Selection Buttons -->
+<!-- Genre Selection Buttons -->
 <div class="genreButtons">
+    <!-- Buttons to filter movies by genre -->
     <a href="/short"><button class="Button GenreButton">Short</button></a>
     <a href="/animation"><button class="Button GenreButton">Animation</button></a>
     <a href="/documentary"><button class="Button GenreButton">Documentary</button></a>
     <a href="/animation-comedy"><button class="Button GenreButton">Animation & Comedy</button></a>
 </div>
 
-<!-- Movie List -->
+<!-- Movie List Header -->
 <header>
     <h1>All Technical Movies</h1>
 </header>
 
+<!-- Loop through each movie in the movieSearchResult array -->
 {% for movie in movieSearchResult %}
 <section>
     <div class="movieBox">
+        <!-- Left side bar with movie details and actions -->
         <div class="LeftSideBar">
+            <!-- Movie poster image -->
             <div class="editorIcon">
                 <img src="{{ movie.poster }}" height="160em" />
             </div>
+            <!-- Movie director's name -->
             <div class="Author">
                 <p>{{ movie.director }}</p>
             </div>
+            <!-- Divider line -->
             <div>
                 <hr color="#6d64ff" width="50em">
             </div>
+            <!-- Like icon and count -->
             <div class="likesIcon">
                 <img src="/heart-suit.png" height="40em" />
             </div>
@@ -103,13 +121,16 @@
             </div>
         </div>
 
+        <!-- Right side content with movie description and actions -->
         <div class="movieBoxContent">
+            <!-- Movie title and description -->
             <div class="movieBoxTextBox">
                 <h3>{{ movie.title }}</h3>
                 <p class="movieText">
                     {{ movie.fullplot }}
                 </p>
             </div>
+            <!-- Action buttons: Read, Edit, Delete -->
             <div class="ButtonsRow">
                 <a href='movie.html/{{ movie.id }}'><button class="Button ReadButton">Read Now</button></a>
                 <a href='edit/{{ movie.id }}'><button class="Button EditButton">Edit</button></a>
@@ -121,5 +142,6 @@
     </div>
 </section>
 {% endfor %}
+<!-- End loop through movieSearchResult -->
 
 {% endblock %}
