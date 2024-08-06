@@ -12,67 +12,72 @@
     </div>
 </div>
 
-<!-- Advanced Search Form -->
+<!-- Advanced Search Buttons -->
 <div class="container mt-5">
-    <form action="/search" method="get" class="bg-dark text-white p-4 rounded">
-        <div class="row">
-            <!-- Genre Selection -->
-            <div class="col-md-4 mb-3">
-                <label for="genres" class="form-label">Select Genres</label>
-                <select name="genres" id="genres" class="form-select" multiple>
-                    <option value="Short">Short</option>
-                    <option value="Animation">Animation</option>
-                    <option value="Documentary">Documentary</option>
-                    <option value="Comedy">Comedy</option>
-                    <option value="Drama">Drama</option>
-                    <option value="Action">Action</option>
-                    <!-- Add more options as needed -->
-                </select>
-            </div>
-            <!-- Year Range -->
-            <div class="col-md-4 mb-3">
-                <label for="year" class="form-label">Year</label>
-                <input type="number" name="year" id="year" class="form-control" placeholder="e.g., 2020">
-            </div>
-            <!-- IMDb Rating Range -->
-            <div class="col-md-4 mb-3">
-                <label for="rating" class="form-label">IMDb Rating</label>
-                <div class="d-flex">
-                    <input type="number" step="0.1" name="minRating" id="minRating" class="form-control me-2"
-                        placeholder="Min" min="0" max="10">
-                    <input type="number" step="0.1" name="maxRating" id="maxRating" class="form-control"
-                        placeholder="Max" min="0" max="10">
+    <div class="bg-dark text-white p-4 rounded">
+        <div class="row mb-3">
+            <!-- Genre Buttons -->
+            <div class="col-md-12 text-center">
+                <h4>Select Genres</h4>
+                <div class="btn-group" role="group">
+                    <a href="/search?genres=Short" class="btn btn-outline-light">Short</a>
+                    <a href="/search?genres=Animation" class="btn btn-outline-light">Animation</a>
+                    <a href="/search?genres=Documentary" class="btn btn-outline-light">Documentary</a>
+                    <a href="/search?genres=Comedy" class="btn btn-outline-light">Comedy</a>
+                    <a href="/search?genres=Drama" class="btn btn-outline-light">Drama</a>
+                    <a href="/search?genres=Action" class="btn btn-outline-light">Action</a>
+                    <!-- Add more buttons as needed -->
                 </div>
             </div>
         </div>
-        <div class="row">
-            <!-- Director -->
-            <div class="col-md-6 mb-3">
-                <label for="director" class="form-label">Director</label>
-                <input type="text" name="director" id="director" class="form-control" placeholder="Director's Name">
-            </div>
-            <!-- Cast -->
-            <div class="col-md-6 mb-3">
-                <label for="cast" class="form-label">Cast</label>
-                <input type="text" name="cast" id="cast" class="form-control" placeholder="Cast Members">
+        <div class="row mb-3">
+            <!-- Year Decade Buttons -->
+            <div class="col-md-12 text-center">
+                <h4>Select Decade</h4>
+                <div class="btn-group" role="group">
+                    <a href="/search?minYear=1880&maxYear=1889" class="btn btn-outline-light">1880s</a>
+                    <a href="/search?minYear=1890&maxYear=1899" class="btn btn-outline-light">1890s</a>
+                    <a href="/search?minYear=1900&maxYear=1909" class="btn btn-outline-light">1900s</a>
+                    <a href="/search?minYear=1910&maxYear=1919" class="btn btn-outline-light">1910s</a>
+                    <a href="/search?minYear=1920&maxYear=1929" class="btn btn-outline-light">1920s</a>
+                    <a href="/search?minYear=1930&maxYear=1939" class="btn btn-outline-light">1930s</a>
+                    <a href="/search?minYear=1940&maxYear=1949" class="btn btn-outline-light">1940s</a>
+                    <a href="/search?minYear=1950&maxYear=1959" class="btn btn-outline-light">1950s</a>
+                    <a href="/search?minYear=1960&maxYear=1969" class="btn btn-outline-light">1960s</a>
+                    <a href="/search?minYear=1970&maxYear=1979" class="btn btn-outline-light">1970s</a>
+                    <a href="/search?minYear=1980&maxYear=1989" class="btn btn-outline-light">1980s</a>
+                    <a href="/search?minYear=1990&maxYear=1999" class="btn btn-outline-light">1990s</a>
+                    <a href="/search?minYear=2000&maxYear=2009" class="btn btn-outline-light">2000s</a>
+                    <a href="/search?minYear=2010&maxYear=2019" class="btn btn-outline-light">2010s</a>
+                    <a href="/search?minYear=2020&maxYear=2029" class="btn btn-outline-light">2020s</a>
+                    <a href="/search?minYear=2030&maxYear=2039" class="btn btn-outline-light">2030s</a>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <!-- Country -->
-            <div class="col-md-6 mb-3">
-                <label for="country" class="form-label">Country</label>
-                <input type="text" name="country" id="country" class="form-control" placeholder="Country of Production">
-            </div>
-            <!-- Language -->
-            <div class="col-md-6 mb-3">
-                <label for="language" class="form-label">Language</label>
-                <input type="text" name="language" id="language" class="form-control" placeholder="Language">
+        <div class="row mb-3">
+            <!-- IMDb Rating Buttons -->
+            <div class="col-md-12 text-center">
+                <h4>Select IMDb Rating</h4>
+                <div class="btn-group" role="group">
+                    <a href="/search?minRating=7&maxRating=10" class="btn btn-outline-light">7-10</a>
+                    <a href="/search?minRating=5&maxRating=7" class="btn btn-outline-light">5-7</a>
+                    <a href="/search?minRating=0&maxRating=5" class="btn btn-outline-light">0-5</a>
+                </div>
             </div>
         </div>
-        <div class="text-center">
-            <button type="submit" class="btn btn-outline-light mt-3">Search</button>
+        <div class="row mb-3">
+            <!-- Other Attribute Buttons -->
+            <div class="col-md-12 text-center">
+                <h4>Select Other Attributes</h4>
+                <div class="btn-group" role="group">
+                    <a href="/search?director=Director+Name" class="btn btn-outline-light">Director Name</a>
+                    <a href="/search?cast=Cast+Member" class="btn btn-outline-light">Cast Member</a>
+                    <a href="/search?country=Country" class="btn btn-outline-light">Country</a>
+                    <a href="/search?language=Language" class="btn btn-outline-light">Language</a>
+                </div>
+            </div>
         </div>
-    </form>
+    </div>
 </div>
 
 <!-- Movie List Header -->
@@ -92,16 +97,18 @@
                     </div>
                     <div class="col-7">
                         <div class="card-body">
-                            <h5 class="card-title">{{ movie.title }}</h5>
-                            <p class="card-text">{{ movie.fullplot }}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">{{ movie.director }}</small>
-                                <div class="d-flex align-items-center">
-                                    <i class="bi bi-heart-fill text-danger me-2"></i>
-                                    <small class="text-muted">{{ movie.imdbRating }}</small>
-                                </div>
-                            </div>
-                            <div class="mt-3">
+                            <h5 class="card-title">{{ movie.title }} ({{ movie.year }})</h5>
+                            <p class="card-text"><strong>Genre:</strong> {{ movie.genre }}</p>
+                            <p class="card-text"><strong>Runtime:</strong> {{ movie.runtime }} minutes</p>
+                            <p class="card-text"><strong>Director:</strong> {{ movie.director }}</p>
+                            <p class="card-text"><strong>Cast:</strong> {{ movie.cast }}</p>
+                            <p class="card-text"><strong>Language:</strong> {{ movie.language }}</p>
+                            <p class="card-text"><strong>Country:</strong> {{ movie.country }}</p>
+                            <p class="card-text"><strong>Awards:</strong> {{ movie.awards }}</p>
+                            <p class="card-text"><strong>IMDb Rating:</strong> {{ movie.imdbRating }} ({{ movie.votes }}
+                                votes)</p>
+                            <p class="card-text"><strong>Plot:</strong> {{ movie.fullplot }}</p>
+                            <div class="mt-3 d-flex justify-content-between">
                                 <a href='movie.html/{{ movie.id }}' class="btn btn-outline-light btn-sm">Read Now</a>
                                 <a href='edit/{{ movie.id }}' class="btn btn-outline-light btn-sm">Edit</a>
                                 <form action='delete/{{ movie.id }}' method="POST" style="display:inline;">

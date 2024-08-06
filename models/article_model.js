@@ -4,6 +4,8 @@ const sqlite = require('sqlite'); // Import sqlite to provide async/await API ov
 
 // Open a connection to the SQLite database
 async function openConnectionToDB() {
+  // Open a connection to the database file 'testing database.db3'
+  // sqlite.open returns a Promise that resolves with the database instance
   const db = await sqlite.open({
     filename: './testing database.db3', // Path to the SQLite database file
     driver: sqlite3.Database // Specify the database driver
@@ -63,55 +65,21 @@ async function updateArticle(article_id, data) {
   }
 }
 
-// Fetch movies from the database based on various attributes
-async function getMoviesByAttributes(filters) {
+// Fetch movies from the database that match one or more genres
+async function getAllMoviesByGenre(genres) {
   const db = await openConnectionToDB(); // Open database connection
-  let query = 'SELECT * FROM MovRec_movie WHERE 1=1'; // Base query
-  let params = [];
+  // Create a list of SQL LIKE patterns for each genre
+  const genrePattern = genres.map(genre => `%${genre}%`);
+  // Construct the SQL query with placeholders for genre patterns
+  let query = `SELECT * FROM MovRec_movie WHERE `;
 
-  // Add filters based on provided attributes
-  if (filters.genres && filters.genres.length > 0) {
-    const genrePattern = filters.genres.map(() => 'genre LIKE ?').join(' OR ');
-    query += ` AND (${genrePattern})`;
-    params.push(...filters.genres.map(genre => `%${genre}%`));
-  }
+  // Build the SQL query dynamically to handle multiple genres
+  genrePattern.forEach((pattern, index) => {
+    query += `genre LIKE ?`; // Add each genre condition
+    if (index < genrePattern.length - 1) query += ` OR `; // Add OR between conditions
+  });
 
-  if (filters.year) {
-    query += ' AND year = ?';
-    params.push(filters.year);
-  }
-
-  if (filters.minRating) {
-    query += ' AND imdbRating >= ?';
-    params.push(filters.minRating);
-  }
-
-  if (filters.maxRating) {
-    query += ' AND imdbRating <= ?';
-    params.push(filters.maxRating);
-  }
-
-  if (filters.director) {
-    query += ' AND director LIKE ?';
-    params.push(`%${filters.director}%`);
-  }
-
-  if (filters.cast) {
-    query += ' AND cast LIKE ?';
-    params.push(`%${filters.cast}%`);
-  }
-
-  if (filters.country) {
-    query += ' AND country LIKE ?';
-    params.push(`%${filters.country}%`);
-  }
-
-  if (filters.language) {
-    query += ' AND language LIKE ?';
-    params.push(`%${filters.language}%`);
-  }
-
-  const movies = await db.all(query, params); // Execute the query with the parameters
+  const movies = await db.all(query, ...genrePattern); // Execute the query with the genre patterns
 
   // Set a default placeholder image URL
   const placeholderImage = 'https://via.placeholder.com/300x450?text=No+Image+Available';
@@ -123,7 +91,7 @@ async function getMoviesByAttributes(filters) {
     }
   });
 
-  return movies; // Return the list of movies that match the filters
+  return movies; // Return the list of movies that match the genres
 }
 
 // Delete an article from the database by its ID
@@ -157,6 +125,69 @@ async function likeArticle(article_id) {
   }
 }
 
+// Search for movies based on various attributes
+async function searchMovies({ genres, minYear, maxYear, minRating, maxRating, director, cast, country, language }) {
+  const db = await openConnectionToDB(); // Open database connection
+
+  // Initialize query and parameters array
+  let query = 'SELECT * FROM MovRec_movie WHERE 1=1';
+  let params = [];
+
+  // Add conditions to the query based on provided filters
+  if (genres) {
+    if (!Array.isArray(genres)) genres = [genres];
+    query += ' AND (' + genres.map(() => 'genre LIKE ?').join(' OR ') + ')';
+    params.push(...genres.map(g => `%${g}%`));
+  }
+  if (minYear) {
+    query += ' AND year >= ?';
+    params.push(minYear);
+  }
+  if (maxYear) {
+    query += ' AND year <= ?';
+    params.push(maxYear);
+  }
+  if (minRating) {
+    query += ' AND imdbrating >= ?';
+    params.push(minRating);
+  }
+  if (maxRating) {
+    query += ' AND imdbrating <= ?';
+    params.push(maxRating);
+  }
+  if (director) {
+    query += ' AND director LIKE ?';
+    params.push(`%${director}%`);
+  }
+  if (cast) {
+    query += ' AND cast LIKE ?';
+    params.push(`%${cast}%`);
+  }
+  if (country) {
+    query += ' AND country LIKE ?';
+    params.push(`%${country}%`);
+  }
+  if (language) {
+    query += ' AND language LIKE ?';
+    params.push(`%${language}%`);
+  }
+
+  // Execute the query with parameters
+  let movieSearchResult = await db.all(query, ...params);
+
+  // Set a default placeholder image URL
+  const placeholderImage = 'https://via.placeholder.com/300x450?text=No+Image+Available';
+
+  // Replace missing poster images with the placeholder image
+  movieSearchResult.forEach(movie => {
+    if (!movie.poster) {
+      movie.poster = placeholderImage;
+    }
+  });
+
+  return movieSearchResult;
+}
+
 // Export the functions for use in other parts of the application
 module.exports = {
   openConnectionToDB,
@@ -166,5 +197,6 @@ module.exports = {
   updateArticle,
   deleteArticle,
   likeArticle,
-  getMoviesByAttributes
+  getAllMoviesByGenre,
+  searchMovies
 };
