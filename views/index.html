@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% block mainContent%}
 
-
-
 <div id="mobile-welcomeToThe">
     <div id="mobile-welcomeToTheText">
         <p>
@@ -13,7 +11,7 @@
     </div>
 
     <div class="Logo" id="mobile-Logo">
-        <h1 class="LogoText" id="mobile=LogoText">
+        <h1 class="LogoText" id="mobile-LogoText">
             Tech Blog 2023
         </h1>
     </div>
@@ -25,9 +23,7 @@
             </b>
         </p>
     </div>
-
 </div>
-
 
 <div class="UpperPart">
     <section class="WelcomeMessage">
@@ -53,11 +49,9 @@
                     </b>
                 </p>
             </div>
-
         </div>
 
-
-        <div id="brandDiscription">
+        <div id="brandDescription">
             <p>
                 <b>
                     The best place to share your knowledge and make the world better
@@ -66,134 +60,66 @@
 
             <p>
                 <a href="./new_movie.html">
-                    <Button class="Button Createmovie">
-                        Create an movie
+                    <Button class="Button CreateMovie">
+                        Create a Movie
                     </Button>
                 </a>
             </p>
-
         </div>
-
-</div>
-
-</div>
-
-<!--- movie generotor -->
-
-
-<!----
-            
-        movie database schema:
-        
-        id
-        title
-        description
-        content //not relevent to  index.html  
-        author
-        likes
-        arabicContent //not relevent to  index.html  
-        -->
-<header>
-    <h1>All Technical movieSearchResult </h1>
-</header>
-
-
-{% for movie in movieSearchResult %}
-
-
-</section>
-</div>
-<div>
-    <section>
-
-
-        <movie class="movieBox">
-
-            <div class="LeftSideBar">
-
-
-
-                <!-- place for movie poster -->
-
-
-                <!-- 
-
-                <div class="editorIcon">
-                    <img src="/editor-icons-2.png" height=40em> </img>
-                </div>
-
- -->
-
-                <!-- <a href="YOUR_LINK_HERE">
-                    <div class="editorIcon">
-                        <img src="{{movie.director}}" height="160em" />
-                    </div>
-                </a> -->
-
-                <div class="editorIcon">
-                    <img src="{{ movie.poster }}" height="160em" />
-                </div>
-
-
-
-                <div class="Author">
-                    <p> {{movie.director}} </p>
-                </div>
-                <div>
-
-                    <hr color=#6d64ff width=50em>
-                </div>
-                <div class="likesIcon">
-                    <img src="/heart-suit.png" height=40em> </img>
-                </div>
-                <div class="likesNumber">
-                    <p> {{movie.imdbRating}}</p>
-                </div>
-            </div>
-
-            <div class="movieBoxContent">
-                <div class="movieBoxTextBox">
-                    <h3> {{movie.title}}</h3>
-                    <p class="movieText">
-                        {{movie.fullplot}}
-                    </p>
-                </div>
-                <div class="ButtonsRow">
-                    <a href='movie.html/{{movie.id}}'> <Button class="Read Button">Read Now </Button></a>
-                    <a href='edit/{{movie.id}}'>
-                        <Button class="Edit Button" method="get" value='{{movie.id}}'>
-                            Edit </Button>
-                        </p>
-                    </a>
-                    <Button class="Delete Button" method="post" value='{{movie.id}}'>
-                        Delete </Button>
-                    </p>
-
-                </div>
-
-
-                <div class="mobile-LeftSideBar">
-                    <div class="editorIcon">
-                        <img src="/editor-icons-2.png" height=40em> </img>
-                    </div>
-                    <div class="Author">
-                        <p> {{movie.author}} </p>
-                    </div>
-                    <div class="VerticalLine">
-
-                    </div>
-                    <div class="likesIcon">
-                        <img src="/heart-suit.png" height=40em> </img>
-                    </div>
-                    <div class="likesNumber">
-                        <p> {{movie.likes}} </p>
-                    </div>
-                </div>
-            </div>
-
-        </movie>
     </section>
 </div>
+
+<!--- Genre Selection Buttons -->
+<div class="genreButtons">
+    <a href="/short"><button class="Button GenreButton">Short</button></a>
+    <a href="/animation"><button class="Button GenreButton">Animation</button></a>
+    <a href="/documentary"><button class="Button GenreButton">Documentary</button></a>
+    <a href="/animation-comedy"><button class="Button GenreButton">Animation & Comedy</button></a>
+</div>
+
+<!-- Movie List -->
+<header>
+    <h1>All Technical Movies</h1>
+</header>
+
+{% for movie in movieSearchResult %}
+<section>
+    <div class="movieBox">
+        <div class="LeftSideBar">
+            <div class="editorIcon">
+                <img src="{{ movie.poster }}" height="160em" />
+            </div>
+            <div class="Author">
+                <p>{{ movie.director }}</p>
+            </div>
+            <div>
+                <hr color="#6d64ff" width="50em">
+            </div>
+            <div class="likesIcon">
+                <img src="/heart-suit.png" height="40em" />
+            </div>
+            <div class="likesNumber">
+                <p>{{ movie.imdbRating }}</p>
+            </div>
+        </div>
+
+        <div class="movieBoxContent">
+            <div class="movieBoxTextBox">
+                <h3>{{ movie.title }}</h3>
+                <p class="movieText">
+                    {{ movie.fullplot }}
+                </p>
+            </div>
+            <div class="ButtonsRow">
+                <a href='movie.html/{{ movie.id }}'><button class="Button ReadButton">Read Now</button></a>
+                <a href='edit/{{ movie.id }}'><button class="Button EditButton">Edit</button></a>
+                <form action='delete/{{ movie.id }}' method="POST" style="display:inline;">
+                    <button class="Button DeleteButton" type="submit">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 {% endfor %}
 
-{%endblock%}
+{% endblock %}
