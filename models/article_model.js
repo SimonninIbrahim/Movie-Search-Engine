@@ -4,8 +4,6 @@ const sqlite = require('sqlite'); // Import sqlite to provide async/await API ov
 
 // Open a connection to the SQLite database
 async function openConnectionToDB() {
-  // Open a connection to the database file 'testing database.db3'
-  // sqlite.open returns a Promise that resolves with the database instance
   const db = await sqlite.open({
     filename: './testing database.db3', // Path to the SQLite database file
     driver: sqlite3.Database // Specify the database driver
@@ -34,18 +32,14 @@ async function returnTrueIfArticleIdIsFree(article_id) {
   const db = await openConnectionToDB(); // Open database connection
   const articleDetails = await db.all('SELECT * FROM MovRec_movie WHERE id = ?', article_id); // Execute SQL query with parameterized id
   // Check if the query returned any rows; if not, the ID is free
-  if (await articleDetails.length === 0) {
-    return true;
-  } else {
-    return false;
-  }
+  return articleDetails.length === 0;
 }
 
 // Add a new article to the database
 async function addArticle(article_data) {
   const db = await openConnectionToDB(); // Open database connection
   // Check if the article ID is free before adding the new article
-  if (await returnTrueIfArticleIdIsFree(article_data.id) === true) {
+  if (await returnTrueIfArticleIdIsFree(article_data.id)) {
     // Insert the new article into the 'articles' table
     const result = await db.run('INSERT INTO articles (id, title, description, content, author, likes, arabicContent) VALUES (?, ?, ?, ?, ?, ?, ?)',
       [article_data.id, article_data.title, article_data.description, article_data.content, article_data.author, article_data.likes, article_data.arabicContent]);
@@ -59,7 +53,7 @@ async function addArticle(article_data) {
 async function updateArticle(article_id, data) {
   const db = await openConnectionToDB(); // Open database connection
   // Check if the article ID exists before updating the article
-  if (await returnTrueIfArticleIdIsFree(article_id) === false) {
+  if (!await returnTrueIfArticleIdIsFree(article_id)) {
     // Update the specified article's details in the 'articles' table
     const result = await db.run('UPDATE articles SET title = ?, description = ?, content = ?, author = ?, likes = ?, arabicContent = ? WHERE id = ?',
       [data.title, data.description, data.content, data.author, data.likes, data.arabicContent, article_id]);
@@ -69,29 +63,74 @@ async function updateArticle(article_id, data) {
   }
 }
 
-// Fetch movies from the database that match one or more genres
-async function getAllMoviesByGenre(genres) {
+// Fetch movies from the database based on various attributes
+async function getMoviesByAttributes(filters) {
   const db = await openConnectionToDB(); // Open database connection
-  // Create a list of SQL LIKE patterns for each genre
-  let genrePattern = genres.map(genre => `%${genre}%`);
-  // Construct the SQL query with placeholders for genre patterns
-  let query = `SELECT * FROM MovRec_movie WHERE `;
+  let query = 'SELECT * FROM MovRec_movie WHERE 1=1'; // Base query
+  let params = [];
 
-  // Build the SQL query dynamically to handle multiple genres
-  genrePattern.forEach((pattern, index) => {
-    query += `genre LIKE ?`; // Add each genre condition
-    if (index < genrePattern.length - 1) query += ` OR `; // Add OR between conditions
+  // Add filters based on provided attributes
+  if (filters.genres && filters.genres.length > 0) {
+    const genrePattern = filters.genres.map(() => 'genre LIKE ?').join(' OR ');
+    query += ` AND (${genrePattern})`;
+    params.push(...filters.genres.map(genre => `%${genre}%`));
+  }
+
+  if (filters.year) {
+    query += ' AND year = ?';
+    params.push(filters.year);
+  }
+
+  if (filters.minRating) {
+    query += ' AND imdbRating >= ?';
+    params.push(filters.minRating);
+  }
+
+  if (filters.maxRating) {
+    query += ' AND imdbRating <= ?';
+    params.push(filters.maxRating);
+  }
+
+  if (filters.director) {
+    query += ' AND director LIKE ?';
+    params.push(`%${filters.director}%`);
+  }
+
+  if (filters.cast) {
+    query += ' AND cast LIKE ?';
+    params.push(`%${filters.cast}%`);
+  }
+
+  if (filters.country) {
+    query += ' AND country LIKE ?';
+    params.push(`%${filters.country}%`);
+  }
+
+  if (filters.language) {
+    query += ' AND language LIKE ?';
+    params.push(`%${filters.language}%`);
+  }
+
+  const movies = await db.all(query, params); // Execute the query with the parameters
+
+  // Set a default placeholder image URL
+  const placeholderImage = 'https://via.placeholder.com/300x450?text=No+Image+Available';
+
+  // Replace missing poster images with the placeholder image
+  movies.forEach(movie => {
+    if (!movie.poster) {
+      movie.poster = placeholderImage;
+    }
   });
 
-  const movies = await db.all(query, ...genrePattern); // Execute the query with the genre patterns
-  return movies; // Return the list of movies that match the genres
+  return movies; // Return the list of movies that match the filters
 }
 
 // Delete an article from the database by its ID
 async function deleteArticle(article_id) {
   const db = await openConnectionToDB(); // Open database connection
   // Check if the article ID exists before deleting the article
-  if (await returnTrueIfArticleIdIsFree(article_id) === false) {
+  if (!await returnTrueIfArticleIdIsFree(article_id)) {
     // Delete the specified article from the 'MovRec_movie' table
     const result = await db.run(`DELETE FROM MovRec_movie WHERE id = ${article_id}`);
     console.log("Result:", result);
@@ -105,7 +144,7 @@ async function deleteArticle(article_id) {
 async function likeArticle(article_id) {
   const db = await openConnectionToDB(); // Open database connection
   // Check if the article ID exists before incrementing likes
-  if (await returnTrueIfArticleIdIsFree(article_id) === false) {
+  if (!await returnTrueIfArticleIdIsFree(article_id)) {
     // Retrieve the current number of likes
     let currentNumberOfLikes = (await db.get('SELECT likes FROM MovRec_movie WHERE id = ?', article_id)).likes;
     // Increment the number of likes by 1
@@ -127,5 +166,5 @@ module.exports = {
   updateArticle,
   deleteArticle,
   likeArticle,
-  getAllMoviesByGenre
+  getMoviesByAttributes
 };

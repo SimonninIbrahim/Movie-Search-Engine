@@ -37,78 +37,61 @@ async function mainIndexHtml() {
     res.send(html); // Send the rendered HTML to the client
   });
 
-  // Route for movies with the "Short" genre
-  app.get('/short', async (req, res) => {
+  // Route for filtering movies by selected genres
+  app.get('/genre', async (req, res) => {
     nunjucks.configure('views', {
       autoescape: false,
       express: app
     });
 
     try {
-      // Fetch movies with the "Short" genre
-      let movieSearchResult = await articleModel.getAllMoviesByGenre(['Short']);
+      // Retrieve selected genres from the query parameters
+      let genres = req.query.genres;
+
+      // Ensure genres is an array
+      if (!Array.isArray(genres)) {
+        genres = [genres];
+      }
+
+      // Fetch movies matching the selected genres
+      let movieSearchResult = await articleModel.getAllMoviesByGenre(genres);
       // Render the 'index.html' template with the fetched movies
       const html = nunjucks.render('index.html', { movieSearchResult });
       res.send(html); // Send the rendered HTML to the client
     } catch (error) {
-      console.error("Error fetching short movies:", error);
+      console.error("Error fetching movies by genres:", error);
       res.status(500).send("Internal Server Error");
     }
   });
 
-  // Route for movies with the "Animation" genre
-  app.get('/animation', async (req, res) => {
+  // Route for handling advanced search with various filters
+  app.get('/search', async (req, res) => {
     nunjucks.configure('views', {
       autoescape: false,
       express: app
     });
 
     try {
-      // Fetch movies with the "Animation" genre
-      let movieSearchResult = await articleModel.getAllMoviesByGenre(['Animation']);
+      // Extract search parameters from the query string
+      const filters = {
+        genres: req.query.genres ? [].concat(req.query.genres) : [], // Convert to array if not already
+        year: req.query.year,
+        minRating: req.query.minRating,
+        maxRating: req.query.maxRating,
+        director: req.query.director,
+        cast: req.query.cast,
+        country: req.query.country,
+        language: req.query.language
+      };
+
+      // Fetch movies matching the search criteria
+      const movieSearchResult = await articleModel.getMoviesByAttributes(filters);
+
       // Render the 'index.html' template with the fetched movies
       const html = nunjucks.render('index.html', { movieSearchResult });
       res.send(html); // Send the rendered HTML to the client
     } catch (error) {
-      console.error("Error fetching animation movies:", error);
-      res.status(500).send("Internal Server Error");
-    }
-  });
-
-  // Route for movies with the "Documentary" genre
-  app.get('/documentary', async (req, res) => {
-    nunjucks.configure('views', {
-      autoescape: false,
-      express: app
-    });
-
-    try {
-      // Fetch movies with the "Documentary" genre
-      let movieSearchResult = await articleModel.getAllMoviesByGenre(['Documentary']);
-      // Render the 'index.html' template with the fetched movies
-      const html = nunjucks.render('index.html', { movieSearchResult });
-      res.send(html); // Send the rendered HTML to the client
-    } catch (error) {
-      console.error("Error fetching documentary movies:", error);
-      res.status(500).send("Internal Server Error");
-    }
-  });
-
-  // Route for movies with combined genres: Animation & Comedy
-  app.get('/animation-comedy', async (req, res) => {
-    nunjucks.configure('views', {
-      autoescape: false,
-      express: app
-    });
-
-    try {
-      // Fetch movies with both "Animation" and "Comedy" genres
-      let movieSearchResult = await articleModel.getAllMoviesByGenre(['Animation', 'Comedy']);
-      // Render the 'index.html' template with the fetched movies
-      const html = nunjucks.render('index.html', { movieSearchResult });
-      res.send(html); // Send the rendered HTML to the client
-    } catch (error) {
-      console.error("Error fetching animation and comedy movies:", error);
+      console.error("Error fetching movies by attributes:", error);
       res.status(500).send("Internal Server Error");
     }
   });

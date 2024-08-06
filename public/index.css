@@ -43,23 +43,23 @@ body {
     background-color: #1E1E1E;
     border: 1px solid #333;
     transition: transform 0.3s ease;
-    height: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    height: 100%;
 }
 
 .movie-card:hover {
     transform: scale(1.05);
 }
 
-/* Standard Movie Poster Dimensions (Aspect Ratio 2:3) */
+/* Ensure classic movie poster dimensions with an aspect ratio of 2:3 */
 .movie-card img {
+    max-width: 150px; /* Set a max width for the movie posters */
     height: auto;
-    width: 100%;
     aspect-ratio: 2 / 3;
     object-fit: cover;
     object-position: center;
+    margin-right: 1rem;
+    flex-shrink: 0;
 }
 
 .movie-card .card-body {
@@ -68,15 +68,17 @@ body {
     flex-direction: column;
     justify-content: space-between;
     flex-grow: 1;
+    overflow: hidden;
 }
 
 .movie-card .card-title {
-    font-size: 1.25rem;
+    font-size: 1.5rem; /* Increase the title size */
     color: #4CAF50;
+    margin-bottom: 0.5rem;
 }
 
 .movie-card .card-text {
-    font-size: 0.9rem;
+    font-size: 1rem; /* Increase the text size */
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
