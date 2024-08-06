@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<main>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" id="stylesheet" href="/index.css">
+        <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
+            type='text/css' />
+        <script type='text/javascript'
+            src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
+    </head>
+
+    <body>
+
+        <div class="HeaderBar">
+            <a href="/">
+                <div class="Logo">
+                    <h1 class="LogoText">
+                        Tech Blog 2023
+                    </h1>
+                </div>
+            </a>
+            <div id='languageSelector'>
+                <select name="language" id="selectLanguage">
+                    <option value="English"> English </option>
+                    <option value="Arabic"> Arabic </option>
+                </select>
+
+            </div>
+
+
+        </div>
+
+
+        <div id="nonBaseStuff">
+            {% block mainContent %}
+
+
+
+            {%endblock%}
+
+
+        </div>
+
+
+        <footer>
+
+
+            <div class="FooterText">
+                <p>
+                    &copy; The
+                </p>
+            </div>
+            <a href="/">
+                <div class="Logo">
+                    <h1 class="LogoText">
+                        Tech Blog 2023
+                    </h1>
+                </div>
+            </a>
+            <div class="FooterText">
+                <p>
+                    created by Abdullah Darwish
+                </p>
+            </div>
+
+        </footer>
+        <script src="/frontendJS.js"></script>
+
+
+
+    </body>
+</main>
+
+</html>

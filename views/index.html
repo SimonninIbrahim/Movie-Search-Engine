@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% block mainContent%}
+
+
+
+<div id="mobile-welcomeToThe">
+    <div id="mobile-welcomeToTheText">
+        <p>
+            <b>
+                Welcome to The
+            </b>
+        </p>
+    </div>
+
+    <div class="Logo" id="mobile-Logo">
+        <h1 class="LogoText" id="mobile=LogoText">
+            Tech Blog 2023
+        </h1>
+    </div>
+
+    <div>
+        <p>
+            <b>
+                &#09; ...
+            </b>
+        </p>
+    </div>
+
+</div>
+
+
+<div class="UpperPart">
+    <section class="WelcomeMessage">
+        <div id="welcomeToThe">
+            <div>
+                <p id="welcomeToTheText">
+                    <b>
+                        Welcome to The
+                    </b>
+                </p>
+            </div>
+
+            <div class="Logo">
+                <h1 class="LogoText">
+                    Tech Blog 2023
+                </h1>
+            </div>
+
+            <div>
+                <p>
+                    <b>
+                        &#09; ...
+                    </b>
+                </p>
+            </div>
+
+        </div>
+
+
+        <div id="brandDiscription">
+            <p>
+                <b>
+                    The best place to share your knowledge and make the world better
+                </b>
+            </p>
+
+            <p>
+                <a href="./new_article.html">
+                    <Button class="Button CreateArticle">
+                        Create an Article
+                    </Button>
+                </a>
+            </p>
+
+        </div>
+
+</div>
+
+</div>
+
+<!--- article generotor -->
+
+
+<!----
+            
+        article database schema:
+        
+        id
+        title
+        description
+        content //not relevent to  index.html  
+        author
+        likes
+        arabicContent //not relevent to  index.html  
+        -->
+<header>
+    <h1>All Technical Articles </h1>
+</header>
+
+
+{% for article in articles %}
+
+
+</section>
+</div>
+<div>
+    <section>
+
+
+        <article class="ArticleBox">
+
+            <div class="LeftSideBar">
+                <div class="editorIcon">
+                    <img src="/editor-icons-2.png" height=40em> </img>
+                </div>
+                <div class="Author">
+                    <p> {{article.author}} </p>
+                </div>
+                <div>
+
+                    <hr color=#6d64ff width=50em>
+                </div>
+                <div class="likesIcon">
+                    <img src="/heart-suit.png" height=40em> </img>
+                </div>
+                <div class="likesNumber">
+                    <p> {{article.likes}}</p>
+                </div>
+            </div>
+
+            <div class="ArticleBoxContent">
+                <div class="ArticleBoxTextBox">
+                    <h3> {{article.title}}</h3>
+                    <p class="ArticleText">
+                        {{article.description}}
+                    </p>
+                </div>
+                <div class="ButtonsRow">
+                    <a href='article.html/{{article.id}}'> <Button class="Read Button">Read Now </Button></a>
+                    <a href='edit/{{article.id}}'>
+                        <Button class="Edit Button" method="get" value='{{article.id}}'>
+                            Edit </Button>
+                        </p>
+                    </a>
+                    <Button class="Delete Button" method="post" value='{{article.id}}'>
+                        Delete </Button>
+                    </p>
+
+                </div>
+
+
+                <div class="mobile-LeftSideBar">
+                    <div class="editorIcon">
+                        <img src="/editor-icons-2.png" height=40em> </img>
+                    </div>
+                    <div class="Author">
+                        <p> {{article.author}} </p>
+                    </div>
+                    <div class="VerticalLine">
+
+                    </div>
+                    <div class="likesIcon">
+                        <img src="/heart-suit.png" height=40em> </img>
+                    </div>
+                    <div class="likesNumber">
+                        <p> {{article.likes}} </p>
+                    </div>
+                </div>
+            </div>
+
+        </article>
+    </section>
+</div>
+{% endfor %}
+
+{%endblock%}
