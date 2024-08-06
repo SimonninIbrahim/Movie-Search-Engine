@@ -27,6 +27,24 @@ async function mainIndexHtml() {
 
 
 
+  // //initilize server
+  // app.get('/', async (req, res) => {
+
+  //   //locate and initilizde template
+  //   nunjucks.configure('views', {
+  //     autoescape: false,
+  //     express: app
+  //   });
+
+  //   //decode the text-html tags into actual html tags. (unescape)
+  //   let articles = await db.all('SELECT * FROM MovRec_movie');
+
+  //   //render resulting html and send it 
+  //   const html = nunjucks.render('index.html', { articles });
+  //   res.send(html);
+  // });
+
+
   //initilize server
   app.get('/', async (req, res) => {
 
@@ -37,12 +55,13 @@ async function mainIndexHtml() {
     });
 
     //decode the text-html tags into actual html tags. (unescape)
-    let articles = await db.all('SELECT * FROM articles');
+    let movieSearchResult = await db.all('SELECT * FROM MovRec_movie');
 
     //render resulting html and send it 
-    const html = nunjucks.render('index.html', { articles });
+    const html = nunjucks.render('index.html', { movieSearchResult });
     res.send(html);
   });
+
 
 
 
@@ -229,7 +248,7 @@ async function mainIndexHtml() {
 
 
     let result = await articleModel.deleteArticle(req.params.id);
-    // let articlesFromDb = await db.all('DELETE FROM articles WHERE id = ?', req.params.id);
+    // let articlesFromDb = await db.all('DELETE FROM MovRec_movie WHERE id = ?', req.params.id);
 
     res.send(JSON.stringify(result));
 

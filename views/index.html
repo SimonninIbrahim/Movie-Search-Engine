@@ -65,9 +65,9 @@
             </p>
 
             <p>
-                <a href="./new_article.html">
-                    <Button class="Button CreateArticle">
-                        Create an Article
+                <a href="./new_movie.html">
+                    <Button class="Button Createmovie">
+                        Create an movie
                     </Button>
                 </a>
             </p>
@@ -78,12 +78,12 @@
 
 </div>
 
-<!--- article generotor -->
+<!--- movie generotor -->
 
 
 <!----
             
-        article database schema:
+        movie database schema:
         
         id
         title
@@ -94,11 +94,11 @@
         arabicContent //not relevent to  index.html  
         -->
 <header>
-    <h1>All Technical Articles </h1>
+    <h1>All Technical movieSearchResult </h1>
 </header>
 
 
-{% for article in articles %}
+{% for movie in movieSearchResult %}
 
 
 </section>
@@ -107,14 +107,37 @@
     <section>
 
 
-        <article class="ArticleBox">
+        <movie class="movieBox">
 
             <div class="LeftSideBar">
+
+
+
+                <!-- place for movie poster -->
+
+
+                <!-- 
+
                 <div class="editorIcon">
                     <img src="/editor-icons-2.png" height=40em> </img>
                 </div>
+
+ -->
+
+                <!-- <a href="YOUR_LINK_HERE">
+                    <div class="editorIcon">
+                        <img src="{{movie.director}}" height="160em" />
+                    </div>
+                </a> -->
+
+                <div class="editorIcon">
+                    <img src="{{ movie.poster }}" height="160em" />
+                </div>
+
+
+
                 <div class="Author">
-                    <p> {{article.author}} </p>
+                    <p> {{movie.director}} </p>
                 </div>
                 <div>
 
@@ -124,25 +147,25 @@
                     <img src="/heart-suit.png" height=40em> </img>
                 </div>
                 <div class="likesNumber">
-                    <p> {{article.likes}}</p>
+                    <p> {{movie.imdbRating}}</p>
                 </div>
             </div>
 
-            <div class="ArticleBoxContent">
-                <div class="ArticleBoxTextBox">
-                    <h3> {{article.title}}</h3>
-                    <p class="ArticleText">
-                        {{article.description}}
+            <div class="movieBoxContent">
+                <div class="movieBoxTextBox">
+                    <h3> {{movie.title}}</h3>
+                    <p class="movieText">
+                        {{movie.fullplot}}
                     </p>
                 </div>
                 <div class="ButtonsRow">
-                    <a href='article.html/{{article.id}}'> <Button class="Read Button">Read Now </Button></a>
-                    <a href='edit/{{article.id}}'>
-                        <Button class="Edit Button" method="get" value='{{article.id}}'>
+                    <a href='movie.html/{{movie.id}}'> <Button class="Read Button">Read Now </Button></a>
+                    <a href='edit/{{movie.id}}'>
+                        <Button class="Edit Button" method="get" value='{{movie.id}}'>
                             Edit </Button>
                         </p>
                     </a>
-                    <Button class="Delete Button" method="post" value='{{article.id}}'>
+                    <Button class="Delete Button" method="post" value='{{movie.id}}'>
                         Delete </Button>
                     </p>
 
@@ -154,7 +177,7 @@
                         <img src="/editor-icons-2.png" height=40em> </img>
                     </div>
                     <div class="Author">
-                        <p> {{article.author}} </p>
+                        <p> {{movie.author}} </p>
                     </div>
                     <div class="VerticalLine">
 
@@ -163,12 +186,12 @@
                         <img src="/heart-suit.png" height=40em> </img>
                     </div>
                     <div class="likesNumber">
-                        <p> {{article.likes}} </p>
+                        <p> {{movie.likes}} </p>
                     </div>
                 </div>
             </div>
 
-        </article>
+        </movie>
     </section>
 </div>
 {% endfor %}

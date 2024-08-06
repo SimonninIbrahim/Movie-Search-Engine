@@ -17,7 +17,7 @@ const sqlite = require('sqlite');
 async function openConnectionToDB() {
 
   const db = await sqlite.open({
-    filename: './articles_store.db3',
+    filename: './testing database.db3',
     driver: sqlite3.Database
   });
 
@@ -30,7 +30,7 @@ async function openConnectionToDB() {
 async function getAllArticles() {
   const db = await openConnectionToDB();
   // console.log('database connection opened');
-  const articles = await db.all('SELECT * FROM articles ');
+  const articles = await db.all('SELECT * FROM MovRec_movie ');
   console.log(articles);
 }
 
@@ -42,7 +42,7 @@ async function getArticleDetail(article_id) {
 
   const db = await openConnectionToDB();
 
-  returnedRow = await db.get('SELECT * FROM articles WHERE id = ?', article_id)
+  returnedRow = await db.get('SELECT * FROM MovRec_movie WHERE id = ?', article_id)
 
   console.log(returnedRow);
   return returnedRow;
@@ -53,7 +53,7 @@ async function returnTrueIfArticleIdIsFree(article_id) {
 
   const db = await openConnectionToDB();
 
-  const articleDetails = await db.all('SELECT * FROM articles WHERE id = ?', article_id);
+  const articleDetails = await db.all('SELECT * FROM MovRec_movie WHERE id = ?', article_id);
   // console.log(`articleDetails.length is ${articleDetails.length}`)
   if (await articleDetails.length === 0) {
     return true;
@@ -100,7 +100,7 @@ async function deleteArticle(article_id) {
   const db = await openConnectionToDB();
   // insert article_data into articles table
   if (await returnTrueIfArticleIdIsFree(article_id) === false) {
-    const result = await db.run(`DELETE FROM articles  WHERE id = ${article_id}`);
+    const result = await db.run(`DELETE FROM MovRec_movie  WHERE id = ${article_id}`);
     console.log("result is:");
     console.log(result);
     // return metadata about the inserted row
@@ -122,7 +122,7 @@ async function likeArticle(article_id) {
   if (await returnTrueIfArticleIdIsFree(article_id) === false) {
 
     // retrive the number of likes
-    let currentNumberOfLikes = ((await db.get('SELECT likes FROM articles WHERE id = ?', article_id))).likes;
+    let currentNumberOfLikes = ((await db.get('SELECT likes FROM MovRec_movie WHERE id = ?', article_id))).likes;
 
 
     //set the new number of likes

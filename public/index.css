@@ -157,9 +157,9 @@ h3{
 
 
 .LeftSideBar {
-    width: 4em;
-    height: 8em;    
-    height: auto;    
+    width: 12em;
+    height: 16em;    
+    /* height: auto;     */
     border-radius: 1rem;
     padding-bottom: .5em;
     margin-bottom: .5em;
