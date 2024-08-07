@@ -1,176 +1,190 @@
 {% extends "base.html" %}
-{% block mainContent%}
+{% block mainContent %}
+<!-- Main content area extending from base template -->
 
-
-
-<div id="mobile-welcomeToThe">
-    <div id="mobile-welcomeToTheText">
-        <p>
-            <b>
-                Welcome to The
-            </b>
-        </p>
+<!-- Hero Section with Welcome Message -->
+<div id="hero-section" class="text-center text-white">
+    <div class="container">
+        <h1 class="display-4">Welcome to The</h1>
+        <h1 class="LogoText display-1">Tech Blog 2023</h1>
+        <p class="lead">The best place to share your knowledge and make the world better</p>
+        <a href="./new_movie.html" class="btn btn-success mt-4">Create a Movie</a>
     </div>
-
-    <div class="Logo" id="mobile-Logo">
-        <h1 class="LogoText" id="mobile=LogoText">
-            Tech Blog 2023
-        </h1>
-    </div>
-
-    <div>
-        <p>
-            <b>
-                &#09; ...
-            </b>
-        </p>
-    </div>
-
 </div>
 
-
-<div class="UpperPart">
-    <section class="WelcomeMessage">
-        <div id="welcomeToThe">
-            <div>
-                <p id="welcomeToTheText">
-                    <b>
-                        Welcome to The
-                    </b>
-                </p>
+<!-- Advanced Search Filters -->
+<div class="container mt-5">
+    <div class="bg-dark text-white p-4 rounded">
+        <div class="row mb-3">
+            <!-- Genre Buttons -->
+            <div class="col-md-12 text-center">
+                <h4>Select Genres</h4>
+                <div class="btn-group" role="group">
+                    <button class="btn btn-outline-light filter-btn" data-filter="genres"
+                        data-value="Short">Short</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="genres"
+                        data-value="Animation">Animation</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="genres"
+                        data-value="Documentary">Documentary</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="genres"
+                        data-value="Comedy">Comedy</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="genres"
+                        data-value="Drama">Drama</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="genres"
+                        data-value="Action">Action</button>
+                    <!-- Add more buttons as needed -->
+                </div>
             </div>
-
-            <div class="Logo">
-                <h1 class="LogoText">
-                    Tech Blog 2023
-                </h1>
-            </div>
-
-            <div>
-                <p>
-                    <b>
-                        &#09; ...
-                    </b>
-                </p>
-            </div>
-
         </div>
-
-
-        <div id="brandDiscription">
-            <p>
-                <b>
-                    The best place to share your knowledge and make the world better
-                </b>
-            </p>
-
-            <p>
-                <a href="./new_article.html">
-                    <Button class="Button CreateArticle">
-                        Create an Article
-                    </Button>
-                </a>
-            </p>
-
+        <div class="row mb-3">
+            <!-- Year Decade Buttons -->
+            <div class="col-md-12 text-center">
+                <h4>Select Decade</h4>
+                <div class="btn-group" role="group">
+                    <button class="btn btn-outline-light filter-btn" data-filter="minYear" data-value="1880"
+                        data-maxYear="1889">1880s</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="minYear" data-value="1890"
+                        data-maxYear="1899">1890s</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="minYear" data-value="1900"
+                        data-maxYear="1909">1900s</button>
+                    <!-- Add more buttons for each decade up to 2030s -->
+                </div>
+            </div>
         </div>
-
+        <div class="row mb-3">
+            <!-- IMDb Rating Buttons -->
+            <div class="col-md-12 text-center">
+                <h4>Select IMDb Rating</h4>
+                <div class="btn-group" role="group">
+                    <button class="btn btn-outline-light filter-btn" data-filter="minRating" data-value="7"
+                        data-maxRating="10">7-10</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="minRating" data-value="5"
+                        data-maxRating="7">5-7</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="minRating" data-value="0"
+                        data-maxRating="5">0-5</button>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <!-- Other Attribute Buttons -->
+            <div class="col-md-12 text-center">
+                <h4>Select Other Attributes</h4>
+                <div class="btn-group" role="group">
+                    <button class="btn btn-outline-light filter-btn" data-filter="director"
+                        data-value="Director+Name">Director Name</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="cast" data-value="Cast+Member">Cast
+                        Member</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="country"
+                        data-value="Country">Country</button>
+                    <button class="btn btn-outline-light filter-btn" data-filter="language"
+                        data-value="Language">Language</button>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <!-- Search Button -->
+            <div class="col-md-12 text-center">
+                <button id="search-button" class="btn btn-outline-light">Search</button>
+            </div>
+        </div>
+    </div>
 </div>
 
-</div>
-
-<!--- article generotor -->
-
-
-<!----
-            
-        article database schema:
-        
-        id
-        title
-        description
-        content //not relevent to  index.html  
-        author
-        likes
-        arabicContent //not relevent to  index.html  
-        -->
-<header>
-    <h1>All Technical Articles </h1>
+<!-- Movie List Header -->
+<header class="container mt-5">
+    <h1 class="text-white">All Technical Movies</h1>
 </header>
 
-
-{% for article in articles %}
-
-
-</section>
-</div>
-<div>
-    <section>
-
-
-        <article class="ArticleBox">
-
-            <div class="LeftSideBar">
-                <div class="editorIcon">
-                    <img src="/editor-icons-2.png" height=40em> </img>
-                </div>
-                <div class="Author">
-                    <p> {{article.author}} </p>
-                </div>
-                <div>
-
-                    <hr color=#6d64ff width=50em>
-                </div>
-                <div class="likesIcon">
-                    <img src="/heart-suit.png" height=40em> </img>
-                </div>
-                <div class="likesNumber">
-                    <p> {{article.likes}}</p>
-                </div>
-            </div>
-
-            <div class="ArticleBoxContent">
-                <div class="ArticleBoxTextBox">
-                    <h3> {{article.title}}</h3>
-                    <p class="ArticleText">
-                        {{article.description}}
-                    </p>
-                </div>
-                <div class="ButtonsRow">
-                    <a href='article.html/{{article.id}}'> <Button class="Read Button">Read Now </Button></a>
-                    <a href='edit/{{article.id}}'>
-                        <Button class="Edit Button" method="get" value='{{article.id}}'>
-                            Edit </Button>
-                        </p>
-                    </a>
-                    <Button class="Delete Button" method="post" value='{{article.id}}'>
-                        Delete </Button>
-                    </p>
-
-                </div>
-
-
-                <div class="mobile-LeftSideBar">
-                    <div class="editorIcon">
-                        <img src="/editor-icons-2.png" height=40em> </img>
+<!-- Loop through each movie in the movieSearchResult array -->
+<div class="container mt-4">
+    <div class="row">
+        {% for movie in movieSearchResult %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card bg-dark text-white movie-card">
+                <div class="row g-0">
+                    <div class="col-5">
+                        <img src="{{ movie.poster }}" class="card-img-left img-fluid" alt="{{ movie.title }} poster">
                     </div>
-                    <div class="Author">
-                        <p> {{article.author}} </p>
-                    </div>
-                    <div class="VerticalLine">
-
-                    </div>
-                    <div class="likesIcon">
-                        <img src="/heart-suit.png" height=40em> </img>
-                    </div>
-                    <div class="likesNumber">
-                        <p> {{article.likes}} </p>
+                    <div class="col-7">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ movie.title }} ({{ movie.year }})</h5>
+                            <p class="card-text"><strong>Genre:</strong> {{ movie.genre }}</p>
+                            <p class="card-text"><strong>Runtime:</strong> {{ movie.runtime }} minutes</p>
+                            <p class="card-text"><strong>Director:</strong> {{ movie.director }}</p>
+                            <p class="card-text"><strong>Cast:</strong> {{ movie.cast }}</p>
+                            <p class="card-text"><strong>Language:</strong> {{ movie.language }}</p>
+                            <p class="card-text"><strong>Country:</strong> {{ movie.country }}</p>
+                            <p class="card-text"><strong>Awards:</strong> {{ movie.awards }}</p>
+                            <p class="card-text"><strong>IMDb Rating:</strong> {{ movie.imdbRating }} ({{ movie.votes }}
+                                votes)</p>
+                            <p class="card-text"><strong>Plot:</strong> {{ movie.fullplot }}</p>
+                            <div class="mt-3 d-flex justify-content-between">
+                                <a href='movie.html/{{ movie.id }}' class="btn btn-outline-light btn-sm">Read Now</a>
+                                <a href='edit/{{ movie.id }}' class="btn btn-outline-light btn-sm">Edit</a>
+                                <form action='delete/{{ movie.id }}' method="POST" style="display:inline;">
+                                    <button class="btn btn-outline-light btn-sm" type="submit">Delete</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-        </article>
-    </section>
+        </div>
+        {% endfor %}
+    </div>
 </div>
-{% endfor %}
+<!-- End loop through movieSearchResult -->
 
-{%endblock%}
+<script>
+    // JavaScript to handle filter selection and search
+    document.addEventListener("DOMContentLoaded", function () {
+        const filters = {};
+        const filterButtons = document.querySelectorAll(".filter-btn");
+        filterButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const filter = this.getAttribute("data-filter");
+                const value = this.getAttribute("data-value");
+                const maxValue = this.getAttribute("data-maxYear") || this.getAttribute("data-maxRating");
+
+                // Toggle active state
+                this.classList.toggle("active");
+
+                if (this.classList.contains("active")) {
+                    // Add to filters
+                    if (filter === "minYear" || filter === "minRating") {
+                        filters[filter] = value;
+                        if (maxValue) {
+                            filters[maxValue.includes("Year") ? "maxYear" : "maxRating"] = maxValue;
+                        }
+                    } else {
+                        if (!filters[filter]) {
+                            filters[filter] = [];
+                        }
+                        filters[filter].push(value);
+                    }
+                } else {
+                    // Remove from filters
+                    if (filter === "minYear" || filter === "minRating") {
+                        delete filters[filter];
+                        if (maxValue) {
+                            delete filters[maxValue.includes("Year") ? "maxYear" : "maxRating"];
+                        }
+                    } else {
+                        filters[filter] = filters[filter].filter(v => v !== value);
+                        if (filters[filter].length === 0) {
+                            delete filters[filter];
+                        }
+                    }
+                }
+            });
+        });
+
+        // Handle search button click
+        document.getElementById("search-button").addEventListener("click", function () {
+            const query = new URLSearchParams(filters).toString();
+            window.location.href = `/search?${query}`;
+        });
+    });
+</script>
+
+{% endblock %}

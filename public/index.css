@@ -1,791 +1,201 @@
-
- 
- body{
-
-    font-family: Helvetica ;
-
-} 
-
-
-#articleBody {
-    /* background-color: #56a912; */
-    justify-items: center;
-    justify-self: center;
-    margin-left: 10vw;
-    margin-right: 8vw;
-    justify-items: center;
-    justify-self: center;
-
+body {
+    background-color: #121212;
+    color: #E0E0E0;
+    font-family: 'Helvetica', sans-serif;
 }
 
-
-#introStatement {
-
-color: #6d64ff;
-
-
+#hero-section {
+    background-image: url('https://via.placeholder.com/1920x600'); /* Replace with a suitable hero image */
+    background-size: cover;
+    background-position: center;
+    padding: 150px 0;
+    position: relative;
 }
 
-.articleText {
-
-
-    margin-left: 8vw;
-    margin-right: 5vw;
-
+#hero-section:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
 }
-/* article {
 
-    border-style: groove;
-    border-color:#6d64ff;
-    border-bottom-width: 3px;
-    border-left-width: 3px;
-    border-top-width: 0px;
-    border-right-width: 0px;
-    border-bottom-left-radius: 1rem;
-    height: 10rem; */
+#hero-section h1, 
+#hero-section p {
+    z-index: 1;
+    position: relative;
+}
 
-    /*padding: 10px;
-    margin-left: 20px;
+/* Ensure buttons in the genre selection have consistent styles */
+.genreButtons .btn {
+    border-color: #4CAF50;
+    color: #E0E0E0;
+    transition: all 0.3s ease;
+    background-color: #333333; /* Darker background for better visibility */
+}
 
-} */
-.HeaderBar {
+.genreButtons .btn:hover {
+    background-color: #4CAF50;
+    color: #121212;
+}
+
+/* Movie card styles */
+.movie-card {
+    background-color: #1E1E1E;
+    border: 1px solid #333;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
-    justify-content: space-between;
-    padding: 0 15em;
-    padding: 0 8vw;
-    /* padding-right: 0; */
-    margin: 0;
-    background-color: #efeffa;
-    /* height: 2em;*/ 
+    height: 100%;
+}
+
+.movie-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Ensure classic movie poster dimensions with an aspect ratio of 2:3 */
+.movie-card img {
+    max-width: 150px; /* Set a max width for the movie posters */
     height: auto;
-    max-width: 100%;
-    /* padding-top: 0; */
-    /* margin-top: 0; */
-    /* border-top: 0; */
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    object-position: center;
+    margin-right: 1rem;
+    flex-shrink: 0;
 }
-header{
 
-    margin: 0em 10%;
-    
-
-}
-.ArticleBox{
-
-    /* background-color: #cd1512; */
-    border-style: solid;
-    border-color:#6d64ff;
-    /* border-bottom-width: 3px;
-    border-left-width: 3px;
-    border-top-width: 0px;
-    border-right-width: 0px; */
-    border-width: 0px 0px 3px 3px;
-    border-bottom-left-radius: 1rem;
-    height: auto;
-    margin: 0em 10%;
-    display: flex;
-    /* height: 20vh; */
-    /* gap: 10px; */
-    margin-bottom: 20px;
-    /* padding-bottom: 7em; */
-    
-    
-    /* grid-template-rows: 100px 100px;  */
-
-}
-.ArticleBoxContent {
-
+.movie-card .card-body {
+    padding: 1rem;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-
-
-
-}
-
-
-.ArticleBoxTextBox{
-    /* display: flex;
-    flex-direction: column; */
-    /* justify-content: flex-start; */
-    text-align: justify ;
-    line-height: 0.813rem;
-    /* line-height: 0px; */
-    /* background-color: goldenrod; */
-    /* line-clamp: 2; */
-    max-height: 12.5rem;
-    padding: 5px; 
-    max-width: 80ch;
-    
-
-    
-
-}
-
-#mobile-welcomeToThe {
-
-    /* display: flex; */
-    display: none;
-    /* align-self: center; */
-    /* align-items: center; */
-    /* align-self: center;
-    align-items: center;
-    align-content: center;
-    align-tracks: center; */
-
-
-
-}
-
-
-.ArticleText {
-
-    line-clamp: 2;
-    max-width: 80ch;
-    text-overflow: ellipsis;
+    justify-content: space-between;
+    flex-grow: 1;
     overflow: hidden;
 }
-h3{
 
-    line-height: 0rem;
-}
-.ButtonsRow{
-    display: flex;
-
-    /* background-color: aqua; */
+.movie-card .card-title {
+    font-size: 1.5rem; /* Increase the title size */
+    color: #4CAF50;
+    margin-bottom: 0.5rem;
 }
 
-
-
-.LeftSideBar {
-    width: 4em;
-    height: 8em;    
-    height: auto;    
-    border-radius: 1rem;
-    padding-bottom: .5em;
-    margin-bottom: .5em;
-    justify-content: space-evenly;
-    margin-left: 0.313rem;
-    background-color: #efeffa;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: Helvetica;
-    line-height: 0rem;
-
+.movie-card .card-text {
+    font-size: 1rem; /* Increase the text size */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Limiting text to 3 lines */
+    -webkit-box-orient: vertical;
+    line-height: 1.5;
+    max-height: 4.5rem; /* 3 lines at 1.5 line height */
 }
 
-
-.mobile-LeftSideBar {
-    display: none;
-
-
-    width: auto;
-    /* height: 8em;     */
-    height: auto;    
-    border-radius: 1rem;
-    padding-bottom: .5em;
-    margin-bottom: .5em;
-    justify-content: space-evenly;
-    margin-left: 2vw;
-    background-color: #efeffa;
-    /* display: flex; */
-    flex-direction: row;
-    align-items: center;
-    font-family: Helvetica;
-    line-height: 0rem;
-
-
-
-
-
-
+/* Ensure buttons within the movie card have consistent styles */
+.movie-card .btn {
+    margin-right: 5px;
 }
 
-.VerticalLine{
-
-    background-color: #6d64ff;
-    /* width: 2.2px; */
-    width:  .14em;
-    height: 100%;
-    padding: 0;
-    /* padding-top: %; */
-    margin-top: 7px;
-
-
+.movie-card .btn-outline-light {
+    border-color: #4CAF50;
+    color: #E0E0E0;
 }
 
-#vl2{
-
-
-
-    background-color: #6d64ff;
-    /* width: 2.2px; */
-    width:  .14em;
-    height: 100%;
-    padding: 0;
-    /* padding-top: %; */
-    margin-top: 7px;
-
-
-
+.movie-card .btn-outline-light:hover {
+    background-color: #4CAF50;
+    color: #121212;
 }
 
-
-.Button{
-    border-radius: 1rem;
-    width: auto;
-    min-width: 4.375rem;
-    margin: 0.313rem;
-   
-    height: 50px;
-    
-    border-style: solid;
-    border-color: #6d64ff;
-    border-width: 3px;
-    
-}
-.Button:hover {
-       box-shadow: 5px 5px 0px    #6d64ff;
-
-
-}
-.Read{
-
-    background-color: Black;
-    color: white;
-    
-}
-.Edit {
-    background-color: #6d64ff ;
-    color: white;
-    border-color: black;
-  
-
-}
-.Delete {
-    background-color: #cd1512 ;
-    color: white;
-    
+/* Ensure general text styles are consistent */
+.text-white {
+    color: #E0E0E0 !important;
 }
 
-.CreateArticle{
-
-    background-color: Black;
-    color: white;
-
+.text-center {
+    text-align: center;
 }
 
-
-
-
-
-.editorIcon{
-    margin-top: 4px; 
+.text-muted {
+    color: #9E9E9E !important;
 }
 
-.Author{
-    margin-bottom: 4px;
-     height: 14px
-
+/* Background color for dark sections */
+.bg-dark {
+    background-color: #1E1E1E !important;
 }
+
+/* Background color for primary sections */
+.bg-primary {
+    background-color: #4CAF50 !important;
+}
+
+/* Container settings */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Margin utility classes */
+.mt-4, .my-4 {
+    margin-top: 1.5rem !important;
+}
+
+.mt-5, .my-5 {
+    margin-top: 3rem !important;
+}
+
+.mb-4, .my-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+/* Button styles for success and outline variants */
+.btn-success {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+.btn-outline-light {
+    border-color: #4CAF50;
+    color: #E0E0E0;
+}
+
+.btn-outline-light:hover {
+    background-color: #4CAF50;
+    color: #121212;
+}
+
+/* Styles for horizontal rule */
 hr {
-    height: 14px"
-
+    border-color: #4CAF50;
 }
 
-.likesIcon {
-
-    height: 30px
-}
-.likesNumber {
-    margin: 4px; height: 14px
-
-
+/* Link styles */
+a {
+    color: #4CAF50;
 }
 
-footer{
-    display: flex;
-    justify-content: center;
-    position: absolute;
-
-    margin-top: 8vh;
-
-    padding-left: 0;
-    padding-right: 0;
-    /* padding-bottom: 1em;
-    padding-top: 1em; */
-    padding: .5em 0em;
-    background-color: #efeffa;
-    /* height: auto; */
-    max-height: 5vh;
-    width: 100%;
-    align-content: center;
-    /* position: relative; */
-
-    /* grid-template-columns: 1em 2em 1em; */
-    /* justify-content: space-evenly; */
-    /* background-color: rgb(120, 216, 30); */
-
+a:hover {
+    color: #66BB6A;
 }
 
-.Logo {
-    /* background-color: lightsalmon; */
-
-
-    border-radius: 2rem;
-    border-color: #6d64ff;
-    border-style: solid;
-    justify-content: space-evenly;
-    align-content: center;
-    /* margin: 0 .25rem; */
-    /* margin-top: .50rem; */
-    /* margin-bottom: 5em; */
-    /* margin-bottom: 30px; */
-    padding: 0.1em 0 50px 0px;
-    align-self:center;
-    /* padding: 0 .25rem; */
-    padding-bottom: 2.5rem;
-    height: .01rem;
-    width: 7rem;
-    /* display: flex; */
-}
- 
- 
- 
-
-.LogoText {
-
-    /* background: rgb(131,58,180);
-    background: linear-gradient(90deg, rgba(131,58,180,1) 45%, rgba(253,29,29,1) 100%); */
-
-
-    /* ^ font color source: https://cssgradient.io/ and https://fossheim.io/writing/posts/css-text-gradient/ */
-
-
-    font-size: .91em;
-    background: #121FCF;
-    background: -webkit-linear-gradient(to right, #121FCF 0%, #CF1512 100%); 
-    background: -moz-linear-gradient(to right, #121FCF 0%, #CF1512 100%);
-    background: linear-gradient(to right, #121FCF 0%, #CF1512 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    justify-self: center;
-    align-self: center;
-    padding-top: .25vh;
-
-}
-
-.UpperPart {
-   width: 75vw;
-    display: grid;
-    grid-template-areas: 
-         "hero1 hero2"
-         "blank text";
-    grid-template-columns: 36em 40em;
-    grid-template-rows: 30em 15em;
-
-    align-items: center;
-    /* padding-left: 20%; */
-    background-image: url("hero.png") ;
-    background-repeat: no-repeat;
-
-    background-size: contain;  
-
-    min-width: 20em;
-    /* margin-bottom: 15vh; */
-    height: 95vh;
-    margin-left: 10vw;
-    /* padding-left: vw;  */
-
-    /* width: 100%; */
-
-    /* grid-template-columns: 1em 2em 1em; */
-    /* justify-content: space-evenly; */
-    /* background-color: rgb(120, 216, 30); */
-
-
-}
-.WelcomeMessage {
-
-    /* background-color: peachpuff;  */
-    /* padding-top: 3em; */
-    grid-area: text;
-    display:flex;
-    flex-direction: column; 
-    justify-content: flex-start;
-    margin-bottom: 1em;
-    margin-right: 1em;
-
-
-}
-
-#welcomeToThe {
-
-    display: flex;
-    /* background-color: blanchedalmond; */
-    align-items: center;
-    /* align-self: center; */
-    padding: 1em;
-
-}
-
-#welcomeToTheText{
-
-    padding-top: 1em;
-
-
-}
-
-#brandDiscription{
-
-    padding: .5em; 
-    padding-top: 0em;
-    font-size: 1em;
-
-}
-
-
-.FooterText {
-
-    align-self: center;
-}
-
-#selectLanguage {
-
-    margin-top: 1em
-    /* align-self: center; */
-    /* justify-self: center; */
-
-}
-
-
-
-
-#heroPic{
-
-    grid-area: hero1;
-    width: "1000px";
-
-}
-
+/* Header styles */
 header h1 {
-
-    font-size: 5vw;
+    color: #E0E0E0;
 }
 
-#AuthorCred {
-
-    background-color:  #efeffa;
-    max-width: 9em;
-    /* height: 3em; */
-    padding: .5em;
+/* Hover effects for form elements */
+form .form-control:hover, form .form-select:hover {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
 }
 
-/********************************   article.html classes  ****************************/
-
-
-
-
-.FloatingLikeButton:hover{
-    box-shadow: 5px 5px 0px    #6d64ff;
-
+/* Styles for the search form submit button */
+form .btn-outline-light {
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-
-#likeButton {
-
-    margin-top: .8em;
-    margin-left: .85em;
-    padding-right: 0; margin-right: 0;
-    min-width: 4.4em;
-
-
-}
-
-
-#numberOfLikes{
-
-    color: white;
-    font-size: .9 rem;
-    margin-left: 0; padding-left: 0;
-    /* margin-top: 4em; */
-    margin-right: 1em;
-    z-index: 9999;
-}
-
-table, td, th {
-    /* border: 0.1px solid; */
-    /* border-style: ridge; */
-    border: 1px;
-    border-style: solid;
-    border-collapse: collapse;
-    border-color: lightgray;
-
-}
-
-table th {
-    
-    background-color: rgb(236, 236, 236);
-
-}
-  
-
-
-/****************************************  new_article.html ******************************************************/
-input {
-
-    border-radius: 1rem;
-
-
-}
-
-
-textarea {
-    
-    border-radius: 1rem;
-    margin: 0 10vw;
-    width: 75vw;
-
-}
-
-.foroala_container {
-
-    border-radius: 1rem;
-    margin: 0 10vw;
-    width: 75vw;    
-
-}
-
-
-
-
-
-
-#submitButton {
-
-
-    background-color: Black;
-    color: white;
-
-    margin-top: 30px;
-
-}
-
-.ElementOfArticleCreation  {
-
-    margin: 0 10vw;
-    width: 75vw;
-    /* border-style: double; */
-    /* border-width: 1; */
-
-}
-
-#topText {
-
-
-/* justify-self: center; */
-margin-left: 10vw;
-font-size: 3em;
-
-}
-
-
-
-
-
-/*************************************** media query ************************************/
-
-
-
-/*phones*/
-@media  (max-width: 699px) {
-
-    body{
-        font-size: .91em;
-
-    }
-
-    #mobile-welcomeToThe {
-
-        display: flex;
-    }
-
-    #welcomeToThe {
-
-        display: none;
-
-    }
-
-    .UpperPart {
-
-        justify-self: center;
-        padding-left: 0; 
-
-        grid-template-columns: 35vw 50vw;
-        grid-template-rows: 10em 9em;
-        margin-bottom: 0;
-        margin-top: 0;
-        margin-left: 0;
-        height: 50vh;
-        background-size: 50vh;
-
-        /* background-size: vw 55vh; */
-        /* margin-bottom: 10vh; */
-        /* scale: 2; */
-
-
-
-    }
-
-    .CreateArticle{
-
-        padding-top: 0;
-        
-    
-    }
-
-    #createArticleDiv {
-
-        background-color: aqua;
-        height: 1em;
-        align-items: center;
-
-    }
-
-    #brandDiscription {
-        margin-top: 40px;
-        padding-top: 0;
-        padding-left: 12vw;
-        font-size: .81em;
-
-    }
-
-    .ArticleBox {
-        padding-left: 0;
-        margin-left: 0;
-        padding-top: 0;
-        margin-top: 0;
-    
-        /* scale: .95;* */
-
-    }
-
-    footer {
-        /* position: relative;
-        /* transform: translate(0, -2453); */
-        align-content: flex-end;
-        justify-content: center;
-        /* padding: 0; */
-        /* padding-bottom: 1000px; */
-        /* margin: 0; */
-        /* margin-bottom: 100px; */
-        /* max-height: 1vh; */
-
-    }
-
-
-    footer p {
-
-
-        font-size: .85em;
-
-    }
-
-
-    .ArticleBox{
-
-        /* height: auto */
-
-        margin-left: 3vw;
-    }
-    
-    .mobile-LeftSideBar {
-        display: flex;
-
-    }
-
-
-    .LeftSideBar {
-        display:none;
-
-
-    }
-
-
-
-
-
-}
-
-
-
-/*tablets*/
-@media  (min-width: 700px) and (max-width:959px) {
-
-    
-
-    #mobile-welcomeToThe {
-
-        display: flex;
-    }
-
-    #welcomeToThe {
-
-        display: none;
-
-    }
-
-    .UpperPart {
-
-        justify-self: center;
-        /* padding-left: 20vw;  */
-
-        grid-template-columns: 10em 29em;
-        grid-template-rows: 12em 15em;
-        margin-bottom: 0;
-        margin-top: 0;
-        margin-left: 0;
-        height: 50vh;
-
-        /* background-size: vw 55vh; */
-        /* margin-bottom: 10vh; */
-        /* scale: 2; */
-
-    }
-
-    .CreateArticle{
-
-        padding-top: 0;
-        
-    
-    }
-
-    #createArticleDiv {
-
-        background-color: aqua;
-        height: 1em;
-        align-items: center;
-
-    }
-
-    #brandDiscription {
-
-        padding-top: 0;
-        padding-left: 12vw;
-        justify-self: center;
-        align-self: center;
-    }
-
-
-    .LeftSideBar {
-        display:none;
-
-
-    }
-
-    .mobile-LeftSideBar {
-        display:flex;   
-
-    }
-
+form .btn-outline-light:hover {
+    background-color: #66BB6A;
+    color: #121212;
 }

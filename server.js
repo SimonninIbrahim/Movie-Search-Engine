@@ -1,271 +1,198 @@
+// Import required modules and dependencies
 const express = require('express');
 const nunjucks = require('nunjucks');
 const app = express();
 const cookieParser = require('cookie-parser');
 const articleModel = require('./models/article_model.js');
 const { escape, unescape } = require('html-escaper');
-const path = require('path')
+const path = require('path');
+const multer = require('multer');
+
+// Middleware setup
 app.use(express.static('public'));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-const multer = require('multer');
 
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, './public/')
-//   },
-//   filename: (req, file, cb) => {
-//     console.log(file)
-//     cb(null, Date.now() + path.extname(file.originalname))
-//   }
-// })
+// Set up file storage with multer for file uploads
 const upload = multer({ dest: 'public/' });
 
+// Main function to initialize the server and routes
 async function mainIndexHtml() {
+  // Open a connection to the database
   const db = await articleModel.openConnectionToDB();
 
+  // Configure Nunjucks template engine
+  nunjucks.configure('views', {
+    autoescape: false,
+    express: app
+  });
 
-
-  //initilize server
+  // Route for the home page
   app.get('/', async (req, res) => {
-
-    //locate and initilizde template
-    nunjucks.configure('views', {
-      autoescape: false,
-      express: app
-    });
-
-    //decode the text-html tags into actual html tags. (unescape)
-    let articles = await db.all('SELECT * FROM articles');
-
-    //render resulting html and send it 
-    const html = nunjucks.render('index.html', { articles });
-    res.send(html);
-  });
-
-
-
-  //initilize server
-  app.get('/article.html/:id', async (req, res) => {
-
-    let retrivedLanguage = req.cookies.lang
-    console.log(`/article retrieved language is ${retrivedLanguage}`)
-
-    //locate and initilizde template
-    nunjucks.configure('views', {
-      autoescape: false,
-      express: app
-    });
-
-
-
-
-    let article = await articleModel.getArticleDetail(req.params.id);
-    article.content = await unescape(article.content);
-    article.arabicContent = await unescape(article.arabicContent);
-
-    // console.log(article);
-
-    const html = nunjucks.render('article.html', { article: article, retrivedLanguage: retrivedLanguage });
-    res.send(html);
-
-
-  });
-
-  app.get('/new_article.html', async (req, res) => {
-
-    //locate and initilizde template
-    nunjucks.configure('views', {
-      autoescape: false,
-      express: app
-    });
-
-    let article = {}
-    const html = nunjucks.render('new_article.html', article);
-    res.send(html);
-  });
-
-  app.get('/edit/:id', async (req, res) => {
-
-    // console.log("app.get(/ edit/:id");
-
-    nunjucks.configure('views', {
-      autoescape: false,
-      express: app
-    });
-    let article;
-
     try {
-      article = await articleModel.getArticleDetail(req.params.id);
+      // Fetch all movies from the database
+      let movieSearchResult = await db.all('SELECT * FROM MovRec_movie');
+      // Render the 'index.html' template with the fetched movies
+      const html = nunjucks.render('index.html', { movieSearchResult });
+      res.send(html); // Send the rendered HTML to the client
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  });
+
+  // Route for advanced search with various filters
+  app.get('/search', async (req, res) => {
+    try {
+      // Retrieve search parameters from query
+      let { genres, minYear, maxYear, minRating, maxRating, director, cast, country, language } = req.query;
+
+      // Adjust for decade-based year ranges
+      if (minYear) minYear = parseInt(minYear);
+      if (maxYear) maxYear = parseInt(maxYear);
+
+      // Call searchMovies with the extracted parameters
+      let movieSearchResult = await articleModel.searchMovies({
+        genres,
+        minYear,
+        maxYear,
+        minRating,
+        maxRating,
+        director,
+        cast,
+        country,
+        language
+      });
+
+      // Render the 'index.html' template with the search results
+      const html = nunjucks.render('index.html', { movieSearchResult });
+      res.send(html); // Send the rendered HTML to the client
+    } catch (error) {
+      console.error("Error fetching movies by search parameters:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  });
+
+  // Route for displaying article details by ID
+  app.get('/article.html/:id', async (req, res) => {
+    try {
+      let retrievedLanguage = req.cookies.lang;
+      console.log(`/article retrieved language is ${retrievedLanguage}`);
+
+      // Fetch the article details by ID
+      let article = await articleModel.getArticleDetail(req.params.id);
+      // Unescape HTML content for rendering
       article.content = unescape(article.content);
+      article.arabicContent = unescape(article.arabicContent);
 
+      // Render the 'article.html' template with the article details and language preference
+      const html = nunjucks.render('article.html', { article, retrievedLanguage });
+      res.send(html); // Send the rendered HTML to the client
+    } catch (error) {
+      console.error("Error fetching article details:", error);
+      res.status(500).send("Internal Server Error");
     }
-
-
-    catch (error) {
-      if (error instanceof TypeError) {
-        console.log(req.headers.referer)
-        let URL = (req.headers.referer).split("/");
-
-        let articleId = URL[URL.length - 1];
-        console.log('article id ')
-        console.log(articleId)
-        article = await articleModel.getArticleDetail(articleId);
-        article.content = unescape(article.content);
-
-
-      }
-    }
-
-
-
-    const html = nunjucks.render('new_article.html', { article });
-    res.send(html);
-
   });
 
+  // Route for displaying the page to create a new article
+  app.get('/new_article.html', async (req, res) => {
+    try {
+      const article = {}; // Initialize an empty article object
+      // Render the 'new_article.html' template for creating a new article
+      const html = nunjucks.render('new_article.html', article);
+      res.send(html); // Send the rendered HTML to the client
+    } catch (error) {
+      console.error("Error displaying new article page:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  });
+
+  // Route for editing an existing article by ID
+  app.get('/edit/:id', async (req, res) => {
+    try {
+      // Fetch the article details by ID
+      let article = await articleModel.getArticleDetail(req.params.id);
+      // Unescape HTML content for rendering
+      article.content = unescape(article.content);
+      // Render the 'new_article.html' template with the article details for editing
+      const html = nunjucks.render('new_article.html', { article });
+      res.send(html); // Send the rendered HTML to the client
+    } catch (error) {
+      console.error("Error fetching article for edit:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  });
+
+  // Route for handling form submission to update an article
   app.post('/edit/:id', async (req, res) => {
+    try {
+      // Fetch the original article details by ID
+      const originalArticle = await articleModel.getArticleDetail(req.params.id);
 
-    // console.log('update article invoked');
+      // Prepare the updated article data
+      const editedArticle = {
+        id: originalArticle.id,
+        title: req.body.title,
+        description: req.body.description,
+        content: req.body.content,
+        author: req.body.author,
+        likes: originalArticle.likes,
+        arabicContent: req.body.arabicContent
+      }
 
-    // console.log(req.body.id);
-    // console.log(req.body.title);
-    // console.log(req.body.description);
-    // console.log(req.body.content);
-    // console.log(req.body.author);
-    // console.log(req.body.likes);
-
-    // console.log(req.body.arabicContent);
-
-    // //get the unchanged details
-    originalArticle = await articleModel.getArticleDetail(req.params.id);
-
-    // console.log(originalArticle);
-    editedArticle = {
-
-      id: originalArticle.id,
-      title: req.body.title,
-      description: req.body.description,
-      content: req.body.content,
-      author: req.body.author,
-      likes: originalArticle.likes,
-      arabicContent: req.body.arabicContent
+      // Update the article in the database
+      const result = await articleModel.updateArticle(req.params.id, editedArticle);
+      res.send(JSON.stringify(result)); // Send the update result as JSON
+    } catch (error) {
+      console.error("Error updating article:", error);
+      res.status(500).send("Internal Server Error");
     }
-
-
-    // console.log('from withing the post edit')
-    // console.log(editedArticle)
-    result = await articleModel.updateArticle(req.params.id, editedArticle);
-
-    // console.log(JSON.stringify(result));
-    res.send(JSON.stringify(result));
-
   });
 
-
-
-  // language cookie
-  app.get('/lang', async (req, res) => {
-
-    console.log(req.query.lang)
-
-    if (req.query.lang == 'ar') {
-      console.log('arabic page is being requested')
-      let language = 'en';
-
-      let date = new Date();
-      date.setMonth(date.getMonth() + 1);
-      res.cookie('lang', language, { expires: date });
-
-      res.send('Cookie set!');
-
-    }
-
-    if (req.query.lang == null || req.query.lang == 'en') {
-
-      console.log('english page is being requested')
-
-      let language = 'ar';
-
-      let date = new Date();
-      date.setMonth(date.getMonth() + 1);
-      res.cookie('lang', language, { expires: date });
-
-      res.send('Cookie set!');
-
-    }
-
-
-
-  });
-
-  app.post('/new', async (req, res) => {
-
-    console.log('post new invoked');
-    console.log(req.body);
-
-    articleSumbitted = req.body;
-
-    processedArticle = {
-
-      id: (Math.floor(Math.random() * (99999999 - 10 + 1)) + 10),
-      title: articleSumbitted.title,
-      description: articleSumbitted.description,
-      content: articleSumbitted.content,
-      author: articleSumbitted.author,
-      likes: 0,
-      arabicContent: articleSumbitted.arabicContent
-    }
-
-    result = await articleModel.addArticle(processedArticle);
-
-    // console.log(JSON.stringify(result));
-    res.send(JSON.stringify(result));
-
-  });
-
+  // Route for deleting an article by ID
   app.delete('/article.html/:id/delete', async (req, res) => {
-
-
-    let result = await articleModel.deleteArticle(req.params.id);
-    // let articlesFromDb = await db.all('DELETE FROM articles WHERE id = ?', req.params.id);
-
-    res.send(JSON.stringify(result));
-
+    try {
+      // Delete the article from the database
+      const result = await articleModel.deleteArticle(req.params.id);
+      res.send(JSON.stringify(result)); // Send the deletion result as JSON
+    } catch (error) {
+      console.error("Error deleting article:", error);
+      res.status(500).send("Internal Server Error");
+    }
   });
 
-
+  // Route for liking an article by ID
   app.put('/article.html/:id/like', async (req, res) => {
-
-
-    let result = await articleModel.likeArticle(req.params.id);
-
-    // console.log(JSON.stringify(result));
-    res.send(JSON.stringify(result));
-
+    try {
+      // Increment the like count for the article
+      const result = await articleModel.likeArticle(req.params.id);
+      res.send(JSON.stringify(result)); // Send the like result as JSON
+    } catch (error) {
+      console.error("Error liking article:", error);
+      res.status(500).send("Internal Server Error");
+    }
   });
 
-
+  // Route for handling file uploads
   app.post('/upload', upload.single('file'), function (req, res) {
     if (!req.file) {
-      // Handle the error here
-      res.status(400).send('No file was uploaded');
+      res.status(400).send('No file was uploaded'); // Handle case where no file was uploaded
       return;
     }
 
-    // Return data.
-    console.log(req.file)
+    console.log(req.file); // Log the uploaded file details
+    // Generate the URL for the uploaded file
     const imageUrl = `http://localhost:3000/public/${req.file.filename}`;
-    console.log(imageUrl)
-    res.send({ link: imageUrl });
+    console.log(imageUrl);
+    res.send({ link: imageUrl }); // Send the file URL as the response
   });
 
-
+  // Start the server and listen on port 3000
   app.listen(3000, () => {
     console.log('Server listening on port 3000');
   });
-
 }
 
-mainIndexHtml(); 
+// Call the main function to start the server and set up routes
+mainIndexHtml(); // Ensure this call is after the function definition
